@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online.com.ly - Professional Web Viewers & Editors</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: #1a1a1a; color: #fff; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+        
+        /* Ad Banners Top & Bottom */
+        .ad-banner { width: 100%; height: 60px; background: #2a2a2a; display: flex; align-items: center; justify-content: center; color: #777; font-size: 14px; border-bottom: 1px solid #333; border-top: 1px solid #333; }
+        
+        /* Main Container */
+        .main-container { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 20px; }
+        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; width: 100%; justify-items: center; }
+        
+        /* Buttons Style inspired by target interface */
+        .viewer-btn {
+            background-color: #e0e0e0;
+            color: #000;
+            padding: 18px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+            text-align: center;
+            width: 100%;
+        }
+        .viewer-btn:hover { background-color: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+        .viewer-btn span { font-weight: 400; color: #333; font-size: 14px; display: block; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Ad Banner -->
+    <div class="ad-banner">Top Advertisement Space (728x90 / Responsive)</div>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <div class="grid-wrapper">
+            <a href="https://text.online.com.ly" target="_blank" class="viewer-btn">Text <span>Online Viewer</span></a>
+            <a href="https://json.online.com.ly" target="_blank" class="viewer-btn">JSON <span>Online Viewer</span></a>
+            <a href="https://xml.online.com.ly" target="_blank" class="viewer-btn">XML <span>Online Viewer</span></a>
+            <a href="https://html.online.com.ly" target="_blank" class="viewer-btn">HTML <span>Online Viewer</span></a>
+            <a href="https://js.online.com.ly" target="_blank" class="viewer-btn">JS <span>Online Viewer</span></a>
+            <a href="https://css.online.com.ly" target="_blank" class="viewer-btn">CSS <span>Online Viewer</span></a>
+        </div>
+    </div>
+
+    <!-- Bottom Ad Banner -->
+    <div class="ad-banner">Bottom Advertisement Space (728x90 / Responsive)</div>
+
+</body>
+</html>
