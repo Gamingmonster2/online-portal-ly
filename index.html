@@ -4,33 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online.com.ly - Professional Web Viewers & Editors</title>
+    <!-- Favicon ⚡ Emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        body { background-color: #1a1a1a; color: #fff; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
         
+        body { 
+            background-color: #121214; 
+            color: #fff; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Animated Background Lightning Effect */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, rgba(147, 51, 234, 0.05) 35%, transparent 70%);
+            animation: lightningPulse 7s infinite alternate ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes lightningPulse {
+            0% { transform: scale(0.9) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.7; }
+            100% { transform: scale(0.95) rotate(360deg); opacity: 0.4; }
+        }
+
         /* Ad Banners Top & Bottom */
-        .ad-banner { width: 100%; height: 60px; background: #2a2a2a; display: flex; align-items: center; justify-content: center; color: #777; font-size: 14px; border-bottom: 1px solid #333; border-top: 1px solid #333; }
-        
+        .ad-banner { 
+            width: 100%; 
+            height: 60px; 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #777; 
+            font-size: 14px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+            border-top: 1px solid rgba(255, 255, 255, 0.08); 
+            position: relative;
+            z-index: 1;
+        }
+
         /* Main Container */
-        .main-container { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 20px; }
-        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; width: 100%; justify-items: center; }
-        
-        /* Buttons Style inspired by target interface */
+        .main-container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            flex: 1; 
+            padding: 40px 20px; 
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid-wrapper { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 16px; 
+            max-width: 850px; 
+            width: 100%; 
+            justify-items: center; 
+        }
+
+        /* Glassmorphism Buttons */
         .viewer-btn {
-            background-color: #e0e0e0;
-            color: #000;
-            padding: 18px 24px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            padding: 20px 24px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             width: 100%;
         }
-        .viewer-btn:hover { background-color: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
-        .viewer-btn span { font-weight: 400; color: #333; font-size: 14px; display: block; margin-top: 4px; }
+
+        .viewer-btn:hover { 
+            background: rgba(255, 255, 255, 0.15); 
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.1); 
+        }
+
+        .viewer-btn span { 
+            font-weight: 400; 
+            color: #a1a1aa; 
+            font-size: 13px; 
+            display: block; 
+            margin-top: 4px; 
+        }
     </style>
 </head>
 <body>
@@ -47,6 +127,8 @@
             <a href="https://html.online.com.ly" target="_blank" class="viewer-btn">HTML <span>Online Viewer</span></a>
             <a href="https://js.online.com.ly" target="_blank" class="viewer-btn">JS <span>Online Viewer</span></a>
             <a href="https://css.online.com.ly" target="_blank" class="viewer-btn">CSS <span>Online Viewer</span></a>
+            <a href="https://diff.online.com.ly" target="_blank" class="viewer-btn">Diff <span>Online Viewer</span></a>
+            <a href="https://encode.online.com.ly" target="_blank" class="viewer-btn">Encode <span>Online Viewer</span></a>
         </div>
     </div>
 
