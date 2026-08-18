@@ -3,137 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online.com.ly - Professional Web Viewers & Editors</title>
-    <!-- Favicon ⚡ Emoji -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <title>Assets Encoder - Online.com.ly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        
-        body { 
-            background-color: #121214; 
-            color: #fff; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            justify-content: space-between;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Subtle Animated Background Lightning Effect */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, rgba(147, 51, 234, 0.05) 35%, transparent 70%);
-            animation: lightningPulse 7s infinite alternate ease-in-out;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes lightningPulse {
-            0% { transform: scale(0.9) rotate(0deg); opacity: 0.3; }
-            50% { transform: scale(1.1) rotate(180deg); opacity: 0.7; }
-            100% { transform: scale(0.95) rotate(360deg); opacity: 0.4; }
-        }
-
-        /* Ad Banners Top & Bottom */
-        .ad-banner { 
-            width: 100%; 
-            height: 60px; 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #777; 
-            font-size: 14px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-            border-top: 1px solid rgba(255, 255, 255, 0.08); 
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Main Container */
-        .main-container { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            flex: 1; 
-            padding: 40px 20px; 
-            position: relative;
-            z-index: 1;
-        }
-
-        .grid-wrapper { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 16px; 
-            max-width: 850px; 
-            width: 100%; 
-            justify-items: center; 
-        }
-
-        /* Glassmorphism Buttons */
-        .viewer-btn {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            padding: 20px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            width: 100%;
-        }
-
-        .viewer-btn:hover { 
-            background: rgba(255, 255, 255, 0.15); 
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px); 
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.1); 
-        }
-
-        .viewer-btn span { 
-            font-weight: 400; 
-            color: #a1a1aa; 
-            font-size: 13px; 
-            display: block; 
-            margin-top: 4px; 
-        }
+        body { background-color: #121214; color: #fff; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+        .ad-banner { width: 100%; height: 60px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: #777; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .header-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 20px; border-radius: 8px; }
+        .header-title { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .portal-link { color: #3b82f6; text-decoration: none; font-size: 14px; font-weight: 600; }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; background: rgba(255, 255, 255, 0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+        .btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; width: 100%; }
+        .editor-box { display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 0; }
+        .editor-box label { font-size: 14px; color: #a1a1aa; font-weight: 600; }
+        textarea { width: 100%; height: 320px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #60a5fa; padding: 12px; font-family: monospace; font-size: 14px; resize: vertical; outline: none; }
+        .footer { text-align: center; color: #666; font-size: 13px; padding: 10px; }
     </style>
 </head>
 <body>
+    <div class="ad-banner">Top Advertisement Space (728x90)</div>
 
-    <!-- Top Ad Banner -->
-    <div class="ad-banner">Top Advertisement Space (728x90 / Responsive)</div>
+    <div class="container">
+        <div class="header-bar">
+            <div class="header-title">🛡️ Assets Encoder</div>
+            <a href="https://online.com.ly" target="_blank" class="portal-link">🏠 Back to Online.com.ly</a>
+        </div>
 
-    <!-- Main Content Area -->
-    <div class="main-container">
-        <div class="grid-wrapper">
-            <a href="https://text.online.com.ly" target="_blank" class="viewer-btn">Text <span>Online Viewer</span></a>
-            <a href="https://json.online.com.ly" target="_blank" class="viewer-btn">JSON <span>Online Viewer</span></a>
-            <a href="https://xml.online.com.ly" target="_blank" class="viewer-btn">XML <span>Online Viewer</span></a>
-            <a href="https://html.online.com.ly" target="_blank" class="viewer-btn">HTML <span>Online Viewer</span></a>
-            <a href="https://js.online.com.ly" target="_blank" class="viewer-btn">JS <span>Online Viewer</span></a>
-            <a href="https://css.online.com.ly" target="_blank" class="viewer-btn">CSS <span>Online Viewer</span></a>
-            <a href="https://diff.online.com.ly" target="_blank" class="viewer-btn">Diff <span>Online Viewer</span></a>
-            <a href="https://encode.online.com.ly" target="_blank" class="viewer-btn">Encode <span>Online Viewer</span></a>
+        <div class="toolbar">
+            <button class="btn" onclick="encodeBase64()">Base64 Encode</button>
+            <button class="btn" onclick="decodeBase64()">Base64 Decode</button>
+            <button class="btn" onclick="encodeURL()">URL Encode</button>
+            <button class="btn" onclick="decodeURL()">URL Decode</button>
+            <button class="btn" onclick="clearData()">Clear</button>
+        </div>
+
+        <div class="workspace">
+            <div class="editor-box">
+                <label>Input Data</label>
+                <textarea id="inputText" placeholder="Enter text or raw data..."></textarea>
+            </div>
+            <div class="editor-box">
+                <label>Output Result</label>
+                <textarea id="outputText" placeholder="Result will appear here..." readonly></textarea>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Ad Banner -->
-    <div class="ad-banner">Bottom Advertisement Space (728x90 / Responsive)</div>
+    <div class="footer">© 2026 Online.com.ly - All rights reserved</div>
+    <div class="ad-banner">Bottom Advertisement Space (728x90)</div>
 
+    <script>
+        function encodeBase64() {
+            const input = document.getElementById('inputText').value;
+            document.getElementById('outputText').value = btoa(unescape(encodeURIComponent(input)));
+        }
+        function decodeBase64() {
+            try {
+                const input = document.getElementById('inputText').value;
+                document.getElementById('outputText').value = decodeURIComponent(escape(atob(input)));
+            } catch(e) { alert("Invalid Base64 format"); }
+        }
+        function encodeURL() {
+            document.getElementById('outputText').value = encodeURIComponent(document.getElementById('inputText').value);
+        }
+        function decodeURL() {
+            document.getElementById('outputText').value = decodeURIComponent(document.getElementById('inputText').value);
+        }
+        function clearData() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+        }
+    </script>
 </body>
 </html>
