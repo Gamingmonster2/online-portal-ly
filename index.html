@@ -1,187 +1,229 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Diff Viewer - Online.com.ly</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+    <title>Online.com.ly - Professional Text and Code File Viewer & Editor Tools</title>
+    <!-- Favicon ⚡ Emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        
-        body { 
-            background-color: #121214; 
-            color: #fff; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            justify-content: space-between;
+        body {
+            background-color: #0b0b0d;
+            font-family: 'Tajawal', sans-serif;
         }
 
-        /* Ad Banners */
-        .ad-banner { 
-            width: 100%; 
-            height: 60px; 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(10px);
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #777; 
-            font-size: 14px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-            border-top: 1px solid rgba(255, 255, 255, 0.08); 
+        /* Subtle Animated Background Lightning Effect */
+        .bg-pulse-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.06) 0%, rgba(147, 51, 234, 0.04) 35%, transparent 70%);
+            animation: lightningPulse 10s infinite alternate ease-in-out;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Container */
-        .container { 
-            max-width: 1200px; 
-            width: 100%; 
-            margin: 0 auto; 
-            padding: 20px; 
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        @keyframes lightningPulse {
+            0% { transform: scale(0.9) rotate(0deg); opacity: 0.4; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0.95) rotate(360deg); opacity: 0.5; }
         }
-
-        /* Header Bar */
-        .header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 20px;
-            border-radius: 8px;
-        }
-
-        .header-title { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .portal-link { color: #3b82f6; text-decoration: none; font-size: 14px; font-weight: 600; }
-        .portal-link:hover { text-decoration: underline; }
-
-        /* Actions Toolbar */
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
-        .btn-primary { background: #2563eb; border-color: #3b82f6; }
-        .btn-primary:hover { background: #1d4ed8; }
-
-        /* Workspace Grid */
-        .workspace {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            width: 100%;
-        }
-
-        .editor-box {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-            min-width: 0;
-        }
-
-        .editor-box label { font-size: 14px; color: #a1a1aa; font-weight: 600; }
-
-        textarea {
-            width: 100%;
-            height: 320px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            color: #22c55e;
-            padding: 12px;
-            font-family: monospace;
-            font-size: 14px;
-            resize: vertical;
-            outline: none;
-        }
-
-        textarea:focus { border-color: #3b82f6; }
-
-        /* Footer */
-        .footer { text-align: center; color: #666; font-size: 13px; padding: 10px; }
     </style>
 </head>
-<body>
+<body class="bg-pulse-effect text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden relative">
 
-    <div class="ad-banner">Top Advertisement Space (728x90)</div>
-
-    <div class="container">
-        <!-- Header Bar -->
-        <div class="header-bar">
-            <div class="header-title">🔍 Code Diff Viewer</div>
-            <a href="https://online.com.ly" target="_blank" class="portal-link">🏠 Back to Online.com.ly</a>
-        </div>
-
-        <!-- Toolbar -->
-        <div class="toolbar">
-            <button class="btn btn-primary" onclick="runDiff()">Compare Code</button>
-            <button class="btn" onclick="swapCode()">Swap Left/Right</button>
-            <button class="btn" onclick="clearAll()">Clear Both</button>
-            <button class="btn" onclick="loadSample()">Load Sample</button>
-        </div>
-
-        <!-- Workspace -->
-        <div class="workspace">
-            <div class="editor-box">
-                <label>Original Code</label>
-                <textarea id="leftCode" placeholder="Paste original code here..."></textarea>
-            </div>
-            <div class="editor-box">
-                <label>Modified Code</label>
-                <textarea id="rightCode" placeholder="Paste modified code here..."></textarea>
-            </div>
+    <!-- Top Ad Banner -->
+    <div class="w-full bg-white/[0.02] border-b border-white/[0.06] backdrop-blur-md py-4 px-4 text-center relative z-10">
+        <div class="max-w-4xl mx-auto flex items-center justify-center min-h-[60px] border border-dashed border-white/10 rounded-lg bg-white/[0.01]">
+            <span class="text-xs md:text-sm text-slate-500 tracking-wider font-medium">Top Advertisement Space (728×90 / Responsive)</span>
         </div>
     </div>
 
-    <div class="footer">© 2026 Online.com.ly - All rights reserved</div>
-    <div class="ad-banner">Bottom Advertisement Space (728x90)</div>
+    <!-- Main Content Area -->
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-12 md:py-16 relative z-10 w-full max-w-6xl mx-auto">
+        
+        <!-- Header / Logo -->
+        <div class="text-center mb-12 animate-fade-in">
+            <div class="inline-flex items-center justify-center gap-3 mb-4">
+                <span class="text-4xl md:text-5xl">⚡</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+                    Online<span class="text-blue-500">.com.ly</span>
+                </h1>
+            </div>
+            <p class="text-sm md:text-base text-slate-400 max-w-lg mx-auto font-medium">
+                The professional all-in-one platform to view, edit, and format code files and text directly in your browser.
+            </p>
+        </div>
 
-    <script>
-        function swapCode() {
-            const left = document.getElementById('leftCode');
-            const right = document.getElementById('rightCode');
-            const temp = left.value;
-            left.value = right.value;
-            right.value = temp;
-        }
+        <!-- Grid Wrapper -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+            
+            <!-- Card 1: Text -->
+            <a href="https://text.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-blue-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-blue-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-file-lines text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">TEXT</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors duration-300">Text Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">Text Online Viewer</span>
+                </div>
+            </a>
 
-        function clearAll() {
-            document.getElementById('leftCode').value = '';
-            document.getElementById('rightCode').value = '';
-        }
+            <!-- Card 2: JSON -->
+            <a href="https://json.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-yellow-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-yellow-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-code text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">JSON</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">JSON Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">JSON Online Viewer</span>
+                </div>
+            </a>
 
-        function loadSample() {
-            document.getElementById('leftCode').value = '<div class="box">\n  <h2>Hello World</h2>\n</div>';
-            document.getElementById('rightCode').value = '<div class="box glass">\n  <h2>Hello Seif</h2>\n  <p>Online.com.ly</p>\n</div>';
-        }
+            <!-- Card 3: XML -->
+            <a href="https://xml.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-green-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-green-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-file-code text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">XML</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-green-400 transition-colors duration-300">XML Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">XML Online Viewer</span>
+                </div>
+            </a>
 
-        function runDiff() {
-            alert("Comparing complete! Both containers are clean and responsive.");
-        }
-    </script>
+            <!-- Card 4: HTML -->
+            <a href="https://html.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-orange-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-orange-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-orange-500/10 text-orange-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-brands fa-html5 text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">HTML</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors duration-300">HTML Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">HTML Online Viewer</span>
+                </div>
+            </a>
+
+            <!-- Card 5: JS -->
+            <a href="https://js.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-amber-400/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-amber-400/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-amber-400/10 text-amber-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-brands fa-js text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">JS</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors duration-300">JavaScript Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">JS Online Viewer</span>
+                </div>
+            </a>
+
+            <!-- Card 6: CSS -->
+            <a href="https://css.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-cyan-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-cyan-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-brands fa-css3-alt text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">CSS</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">CSS Viewer</h3>
+                    <span class="text-xs text-slate-400 block mt-1">CSS Online Viewer</span>
+                </div>
+            </a>
+
+            <!-- Card 7: Diff -->
+            <a href="https://diff.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-purple-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-code-compare text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">DIFF</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors duration-300">Diff Checker</h3>
+                    <span class="text-xs text-slate-400 block mt-1">Diff Online Viewer</span>
+                </div>
+            </a>
+
+            <!-- Card 8: Encode -->
+            <a href="https://encode.online.com.ly" target="_blank" 
+               class="group relative overflow-hidden rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-emerald-500/30 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-emerald-500/5 p-6 flex flex-col justify-between h-40">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-key text-xl"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">ENCODE</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">Text Encoder</h3>
+                    <span class="text-xs text-slate-400 block mt-1">Encode Online Viewer</span>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Ad Banner -->
+    <div class="w-full bg-white/[0.02] border-t border-white/[0.06] backdrop-blur-md py-4 px-4 text-center relative z-10">
+        <div class="max-w-4xl mx-auto flex items-center justify-center min-h-[60px] border border-dashed border-white/10 rounded-lg bg-white/[0.01] mb-2">
+            <span class="text-xs md:text-sm text-slate-500 tracking-wider font-medium">Bottom Advertisement Space (728×90 / Responsive)</span>
+        </div>
+        <p class="text-[11px] text-slate-600 mt-2">© 2025 Online.com.ly. All rights reserved.</p>
+    </div>
+
 </body>
 </html>
